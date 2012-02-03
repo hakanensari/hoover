@@ -1,0 +1,34 @@
+{
+   "name":"Vacuum",
+   "description":"A Node.js wrapper to the Amazon Product Advertising API",
+   "version":"0.0.1",
+   "homepage":"http://github.com/hakanensari/vacuum-js",
+   "author":"Hakan Ensari <hakan.ensari@papercavalier.com>",
+   "main":"./lib/vacuum",
+   "directories": {
+     "lib":"./lib/vacuum"
+   },
+   "bugs": {
+     "mail":"hakan.ensari@papercavalier.com",
+     "url":"http://github.com/hakanensari/vacuum/issues"
+   },
+   "repository": {
+     "type":"git",
+     "url":"git://github.com/hakanensari/vacuum.git"
+   },
+   "dependencies":{
+     "coffee-script":"*"
+   },
+   "devDependencies":{
+     "jasmine-node":"*"
+   },
+   "engines":{
+     "node":">= 0.4.0"
+   },
+   "licenses":[
+     {
+       "type":"MIT",
+       "url":"https://raw.github.com/hakanensari/vacuum-js/master/LICENSE"
+     }
+   ]
+}
