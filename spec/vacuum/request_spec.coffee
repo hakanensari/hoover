@@ -58,8 +58,7 @@ describe 'Request', ->
 
   describe '#reset', ->
     it 'resets the parameters to default values', ->
-      @req._params.foo = 1
-      expect(@req.reset.foo).toBeUndefined()
+      expect(@req.add(foo: 1).reset.foo).toBeUndefined()
 
   describe '#_query', ->
     it 'sorts the parameters', ->
