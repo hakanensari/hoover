@@ -12,7 +12,7 @@ describe 'Request', ->
       expect ->
         new Request
           secret: 'foo'
-          tag: '  bar'
+          tag:    'bar'
       .toThrow 'Missing key'
 
     it 'requires a secret', ->
