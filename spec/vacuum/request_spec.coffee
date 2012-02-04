@@ -53,8 +53,16 @@ describe 'Request', ->
 
   describe '#get', ->
     it 'returns a response', ->
+      _res = null
       @req.get (res) ->
-        expect(res.constructor).toMatch /Response/
+        _res = res
+
+      waitsFor ->
+        _res
+      , 'Response timed out', 1000
+
+      runs ->
+        expect(_res.constructor).toMatch /Response/
 
   describe '#reset', ->
     it 'resets the parameters to default values', ->
