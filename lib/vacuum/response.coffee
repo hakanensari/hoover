@@ -1,4 +1,4 @@
 class Response
-  constructor: ->
+  constructor: (data, statusCode) ->
 
 module.exports = Response
