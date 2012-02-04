@@ -28,7 +28,7 @@ class Request
     for key, val of properties
       val = val.join(',') if val.constructor == Array
       key = key[0].toUpperCase() + key.slice(1)
-      @params[key] = val
+      @_params[key] = val
 
     @
 
@@ -49,7 +49,7 @@ class Request
 
   # Resets the request parameters.
   reset: ->
-    @params =
+    @_params =
       AWSAccessKeyId : @_key
       AssociateTag   : @_tag
       Service        : 'AWSECommerceService'
@@ -60,7 +60,7 @@ class Request
 
   _query: ->
     query = _
-      .chain(@params)
+      .chain(@_params)
       .map (val, key) ->
         [key, val]
       .sortBy (tuple) ->

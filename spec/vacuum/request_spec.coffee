@@ -42,14 +42,14 @@ describe 'Request', ->
       expect(@req._host).toMatch /\.com/
 
     it 'sets up the parameters with default values', ->
-      expect(@req.params.Timestamp).toBeDefined()
+      expect(@req._params.Timestamp).toBeDefined()
 
   describe '#add', ->
     it 'adds new parameters to the existing ones', ->
-      expect(@req.add(foo: 'bar').params.Foo).toBe('bar')
+      expect(@req.add(foo: 'bar')._params.Foo).toBe('bar')
 
     it 'casts values that are arrays to strings', ->
-      expect(@req.add(foo: [1, 2]).params.Foo).toBe('1,2')
+      expect(@req.add(foo: [1, 2])._params.Foo).toBe('1,2')
 
   describe '#get', ->
     it 'returns a response', ->
@@ -58,7 +58,7 @@ describe 'Request', ->
 
   describe '#reset', ->
     it 'resets the parameters to default values', ->
-      @req.params.foo = 1
+      @req._params.foo = 1
       expect(@req.reset.foo).toBeUndefined()
 
   describe '#_query', ->
