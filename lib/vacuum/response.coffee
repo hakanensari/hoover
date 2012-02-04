@@ -1,4 +1,4 @@
 class Response
-  constructor: (data, statusCode) ->
+  constructor: (@data, @statusCode) ->
 
 module.exports = Response

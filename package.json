@@ -17,8 +17,9 @@
      "url":"git://github.com/hakanensari/vacuum.git"
    },
    "dependencies":{
-     "coffee-script":">= 1.0",
-     "underscore":">= 1.0"
+     "coffee-script":"*",
+     "crypto":"*",
+     "underscore":"*"
    },
    "devDependencies":{
      "jasmine-node":"*"

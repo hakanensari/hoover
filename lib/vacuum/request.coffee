@@ -1,8 +1,11 @@
 _        = require 'underscore'
+crypto   = require 'crypto'
 http     = require 'http'
 Response = require './response'
 
+# A wrapper around the request to the Amazon Product Advertising API.
 class Request
+  # Creates a new request for given locale.
   constructor: (options) ->
     @_key    = options.key    or throw 'Missing key'
     @_secret = options.secret or throw 'Missing secret'
@@ -20,16 +23,17 @@ class Request
     }[options.locale or 'us'] or throw 'Bad locale'
     @reset()
 
+  # Merges the given key-value pairs into the request parameters.
   add: (properties) ->
-    for key, value of properties
-      value = value.join(',') if value.constructor == Array
+    for key, val of properties
+      val = val.join(',') if val.constructor == Array
       key = key[0].toUpperCase() + key.slice(1)
-
-      @params[key] = value
+      @params[key] = val
 
     @
 
-  get: (callback) ->
+  # Performs a request.
+  get: (callback, errback = ->) ->
     options =
       host: @_host
       path: "/onca/xml?#{@_query()}"
@@ -40,8 +44,10 @@ class Request
         data += chunk
       .on 'end', ->
         callback new Response(data, res.statusCode)
-    .on 'error', (error) ->
+    .on 'error', (e) ->
+      errback e
 
+  # Resets the request parameters.
   reset: ->
     @params =
       AWSAccessKeyId : @_key
@@ -53,15 +59,26 @@ class Request
     @
 
   _query: ->
-    _
+    query = _
       .chain(@params)
-      .map (value, key) ->
-        [key, value]
+      .map (val, key) ->
+        [key, val]
       .sortBy (tuple) ->
         tuple[0]
       .map (tuple) ->
         "#{tuple[0]}=#{encodeURIComponent(tuple[1])}"
       .value()
       .join('&')
+
+    hmac = crypto.createHmac 'sha256', @_secret
+    hmac.update [
+      'GET',
+      @_host,
+      '/onca/xml',
+      query
+    ].join("\n")
+    signature = hmac.digest 'base64'
+
+    "#{query}&Signature=#{signature}"
 
 module.exports = Request

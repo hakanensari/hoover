@@ -63,10 +63,13 @@ describe 'Request', ->
 
   describe '#_query', ->
     it 'sorts the parameters', ->
-      expect(@req.add(a: 0, z: 1)._query()).toMatch /^A=0&.*Z=1$/
+      expect(@req.add(a: 0)._query()).toMatch /^A=0/
 
     it 'canonicalizes the parameters', ->
       expect(@req._query()).toMatch /\w+=\w+&/
 
     it 'URL-encodes values', ->
       expect(@req.add(foo: 'bar,baz')._query()).toMatch /bar%2Cbaz/
+
+    it 'signs the query', ->
+      expect(@req._query()).toMatch /&Signature=.*/
