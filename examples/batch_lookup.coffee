@@ -1,5 +1,5 @@
 util   = require 'util'
-Vacuum = require '../src/vacuum'
+Hoover = require '../src/hoover'
 
 asins = [
   '0816614024',  '0143105825',  '0485113600',  '0816616779',  '0942299078',
@@ -8,7 +8,7 @@ asins = [
   '1844674282',  '0745640974',  '0745646441',  '0826489540',  '1844672972'
 ]
 
-req = new Vacuum
+req = new Hoover
   key:    process.env.AMAZON_KEY
   secret: process.env.AMAZON_SECRET
   tag:    process.env.AMAZON_TAG

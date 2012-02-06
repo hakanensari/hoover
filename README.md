@@ -1,19 +1,25 @@
-# Vacuum
+# Hoover
 
-[![Build Status](https://secure.travis-ci.org/hakanensari/vacuum-js.png)](http://travis-ci.org/hakanensari/vacuum-js)
+[![Build Status](https://secure.travis-ci.org/hakanensari/hoover-js.png)](http://travis-ci.org/hakanensari/hoover-js)
 
 ## Description
 
-Vacuum is a Node.js wrapper to the [Amazon Product Advertising API] [amazon].
+Hoover is a Node.js wrapper to the [Amazon Product Advertising API] [amazon].
 
-![vacuum] [vacuum]
+![hoover] [hoover]
+
+## Installation
+
+```bash
+npm install v
+```
 
 ## Usage
 
 ```coffee
-Vacuum = require '../src/vacuum'
+Hoover = require 'vm'
 
-req = new Vacuum
+req = new Hoover
   key:    'key'
   secret: 'secret'
   tag:    'tag'
@@ -28,5 +34,5 @@ req
     console.dir res.toObject()
     console.dir res.find 'Item'
 
-[vacuum]: http://f.cl.ly/items/2B3x363M3B3m3X0W2K3i/vacuum.png
+[hoover]: http://f.cl.ly/items/2B3x363M3B3m3X0W2K3i/vacuum.png
 [amazon]: https://affiliate-program.amazon.co.uk/gp/advertising/api/detail/main.html

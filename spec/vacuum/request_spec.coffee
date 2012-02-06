@@ -1,4 +1,4 @@
-Request = require '../../src/vacuum/request'
+Request = require '../../src/hoover/request'
 
 describe 'Request', ->
   beforeEach ->

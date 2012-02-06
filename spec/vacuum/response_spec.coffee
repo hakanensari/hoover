@@ -1,6 +1,6 @@
 fs       = require 'fs'
 libxmljs = require 'libxmljs'
-Response = require '../../src/vacuum/response'
+Response = require '../../src/hoover/response'
 
 describe 'Response', ->
   beforeEach ->

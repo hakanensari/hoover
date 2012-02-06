@@ -1,8 +1,8 @@
 util   = require 'util'
-Vacuum = require '../src/vacuum'
+Hoover = require '../src/hoover'
 
-for locale in Object.keys Vacuum::HOSTS
-  new Vacuum
+for locale in Object.keys Hoover::HOSTS
+  new Hoover
     locale: locale
     key:    process.env.AMAZON_KEY
     secret: process.env.AMAZON_SECRET
