@@ -6,7 +6,9 @@
 
 Hoover is a Node.js wrapper to the [Amazon Product Advertising API] [amazon].
 
-![hoover] [hoover]
+The API gives you access to Amazon's product catalogues in eight countries.
+
+![vacuum] [vacuum]
 
 ## Installation
 
@@ -31,8 +33,19 @@ req
     keywords:    'Deleuze'
     searchIndex: 'All'
   .get (res) ->
-    console.dir res.toObject()
-    console.dir res.find 'Item'
+    for item in res.find 'Item'
+      console.dir item
+```
 
-[hoover]: http://f.cl.ly/items/2B3x363M3B3m3X0W2K3i/vacuum.png
+Now, check the examples or [read the API docs] [api].
+
+## Afterword
+
+It's called Hoover because:
+
+![hoover] [hoover]
+
+[vacuum]: http://f.cl.ly/items/2B3x363M3B3m3X0W2K3i/vacuum.png
 [amazon]: https://affiliate-program.amazon.co.uk/gp/advertising/api/detail/main.html
+[api]: http://aws.amazon.com/archives/Product%20Advertising%20API
+[hoover]: http://f.cl.ly/items/1Q3W372A0H3M0w2H1e0W/hoover.jpeg
