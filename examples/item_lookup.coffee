@@ -1,4 +1,5 @@
-Vacuum = require '../../lib/vacuum'
+util   = require 'util'
+Vacuum = require '../src/vacuum'
 
 req = new Vacuum
   key:    process.env.AMAZON_KEY
@@ -10,4 +11,4 @@ req.add
   itemId:    '0816614024'
 
 req.get (res) ->
-  console.dir res.data
+  console.log util.inspect res.find('Item'), false, null
