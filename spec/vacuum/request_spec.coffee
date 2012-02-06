@@ -1,4 +1,4 @@
-Request = require '../../lib/vacuum/request'
+Request = require '../../src/vacuum/request'
 
 describe 'Request', ->
   beforeEach ->
@@ -29,17 +29,8 @@ describe 'Request', ->
           secret: 'bar'
       .toThrow 'Missing associate tag'
 
-    it 'requires a valid locale', ->
-      expect ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'secret'
-          locale: 'invalid'
-        .toThrow 'Bad Locale'
-
     it 'defaults locale to the US', ->
-      expect(@req._host).toMatch /\.com/
+      expect(@req.locale).toBe 'us'
 
     it 'sets up the parameters with default values', ->
       expect(@req._params.Timestamp).toBeDefined()
@@ -61,6 +52,13 @@ describe 'Request', ->
 
       runs ->
         expect(@res.constructor).toMatch /Response/
+
+  describe '#host', ->
+    it 'requires a valid locale', ->
+      @req.locale = 'invalid'
+      expect =>
+        @req.host()
+      .toThrow 'Bad locale'
 
   describe '#reset', ->
     it 'resets the parameters to default values', ->

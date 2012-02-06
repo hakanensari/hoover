@@ -1,6 +1,6 @@
 fs       = require 'fs'
 libxmljs = require 'libxmljs'
-Response = require '../../lib/vacuum/response'
+Response = require '../../src/vacuum/response'
 
 describe 'Response', ->
   beforeEach ->
@@ -8,31 +8,27 @@ describe 'Response', ->
     @res = new Response data, 200
 
   describe '#find', ->
-    it 'returns an array of matches', ->
-      expect(@res.find('Item').constructor).toBe Array
-      expect(@res.find('Item')[0]['ASIN'].constructor).toBe String
-
-  describe '#_xmlToObject', ->
     beforeEach ->
-      data = '<?xml version="1.0" ?>' +
-             '<Item>' +
-             '<Title>A Title</Title>' +
-             '<Author>An Author</Author>' +
-             '<Author>Another Author</Author>' +
-             '<Creator Role="Translator">A Translator</Creator>' +
-             '</Item>'
-      doc = libxmljs.parseXmlString(data)
-      @obj = @res._xmlToObject doc.root()
+      @items = @res.find('Item')
 
-    it 'returns an object', ->
-      expect(@obj.constructor).toBe Object
+    it 'returns matches to a given query', ->
+      expect(@items.length).toBeGreaterThan 0
 
-    it 'handles children with no siblings', ->
-      expect(@obj['Title']).toBe 'A Title'
+    it 'returns an empty array if there are no matches', ->
+      expect(@res.find('foo-bar-baz').length).toBe 0
 
-    it 'handles children with siblings', ->
-      expect(@obj['Author'].constructor).toBe Array
+    it 'parses nodes with no siblings', ->
+      expect(@items[0]['ASIN']).toBeDefined()
 
-    it 'handles attributes', ->
-      expect(@obj['Creator']['Role']).toBe 'Translator'
-      expect(@obj['Creator']['__content__']).toBe 'A Translator'
+    it 'parses nodes with siblings', ->
+      itemLinks = @items[0]['ItemLinks']['ItemLink']
+      expect(itemLinks.length).toBeGreaterThan 0
+
+    it 'parses nodes with attributes', ->
+      creator = @items[0]['ItemAttributes']['Creator']
+      expect(creator['Role']).toBeDefined()
+      expect(creator['__content']).toBeDefined()
+
+  describe '#toObject', ->
+    it 'returns entire response as an object', ->
+      expect(@res.toObject().constructor).toBe Object
