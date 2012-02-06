@@ -11,4 +11,4 @@ req.add
   searchIndex: 'All'
 
 req.get (res) ->
-  console.dir res.data
+  console.dir res.find 'Item'

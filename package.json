@@ -19,6 +19,7 @@
    "dependencies":{
      "coffee-script":"*",
      "crypto":"*",
+     "libxmljs":"*",
      "underscore":"*"
    },
    "devDependencies":{
