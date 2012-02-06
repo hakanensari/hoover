@@ -1,6 +1,6 @@
+http     = require 'http'
 _        = require 'underscore'
 crypto   = require 'crypto'
-http     = require 'http'
 Response = require './response'
 
 # A wrapper around the request to the Amazon Product Advertising API.
@@ -26,11 +26,10 @@ class Request
   # Merges the given key-value pairs into the request parameters.
   add: (properties) ->
     for key, val of properties
-      val = val.join(',') if val.constructor == Array
+      val = val.join(',') if val.constructor is Array
       key = key[0].toUpperCase() + key.slice(1)
       @_params[key] = val
-
-    @
+    this
 
   # Performs a request.
   get: (callback, errback = ->) ->
@@ -40,23 +39,23 @@ class Request
 
     http.get options, (res) ->
       data = ''
-      res.on 'data', (chunk) ->
-        data += chunk
-      .on 'end', ->
-        callback new Response(data, res.statusCode)
-    .on 'error', (e) ->
-      errback e
+      res
+        .on 'data', (chunk) ->
+          data += chunk
+        .on 'end', ->
+          callback new Response data, res.statusCode
+        .on 'error', (e) ->
+          errback e
 
   # Resets the request parameters.
   reset: ->
     @_params =
-      AWSAccessKeyId : @_key
-      AssociateTag   : @_tag
-      Service        : 'AWSECommerceService'
-      Timestamp      : new Date().toJSON()
-      Version        : '2011-08-01'
-
-    @
+      AWSAccessKeyId: @_key
+      AssociateTag:   @_tag
+      Service:        'AWSECommerceService'
+      Timestamp:      new Date().toISOString()
+      Version:        '2011-08-01'
+    this
 
   _query: ->
     query = _
