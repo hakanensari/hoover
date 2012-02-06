@@ -1,35 +1,37 @@
 {
-   "name":"Vacuum",
-   "description":"A Node.js wrapper to the Amazon Product Advertising API",
-   "version":"0.0.1",
-   "homepage":"http://github.com/hakanensari/vacuum-js",
-   "author":"Hakan Ensari <hakan.ensari@papercavalier.com>",
-   "main":"./lib/vacuum",
+   "name": "Vacuum",
+   "description": "A Node.js wrapper to the Amazon Product Advertising API",
+   "version": "0.0.1",
+   "homepage": "http://github.com/hakanensari/vacuum-js",
+   "author": "Hakan Ensari <hakan.ensari@papercavalier.com>",
+   "main": "./lib/vacuum",
    "directories": {
-     "lib":"./lib/vacuum"
+     "lib": "./lib/vacuum"
    },
    "bugs": {
-     "mail":"hakan.ensari@papercavalier.com",
-     "url":"http://github.com/hakanensari/vacuum/issues"
+     "url": "http://github.com/hakanensari/vacuum-js/issues"
    },
    "repository": {
-     "type":"git",
-     "url":"git://github.com/hakanensari/vacuum.git"
+     "type": "git",
+     "url": "git://github.com/hakanensari/vacuum-js.git"
    },
-   "dependencies":{
-     "libxmljs":"*",
+   "dependencies": {
+     "libxmljs": "*"
    },
-   "devDependencies":{
-     "coffee-script":"*",
-     "jasmine-node":"*"
+   "devDependencies": {
+     "coffee-script": "*",
+     "jasmine-node": "*"
    },
-   "engines":{
-     "node":">= 0.4.0"
+   "scripts": {
+     "test": "jasmine-node --coffee spec/"
    },
-   "licenses":[
+   "engines": {
+     "node": ">= 0.4.0"
+   },
+   "licenses": [
      {
-       "type":"MIT",
-       "url":"https://raw.github.com/hakanensari/vacuum-js/master/LICENSE"
+       "type": "MIT",
+       "url": "https://raw.github.com/hakanensari/vacuum-js/master/LICENSE"
      }
    ]
 }
