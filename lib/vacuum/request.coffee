@@ -78,6 +78,6 @@ class Request
     ].join("\n")
     signature = hmac.digest 'base64'
 
-    "#{query}&Signature=#{signature}"
+    "#{query}&Signature=#{encodeURIComponent(signature)}"
 
 module.exports = Request
