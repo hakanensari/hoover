@@ -17,7 +17,7 @@ npm install hoover
 ## Usage
 
 ```coffee
-Hoover = require 'vm'
+Hoover = require 'hoover'
 
 req = new Hoover
   key:    'key'
