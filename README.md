@@ -1,6 +1,6 @@
 # Hoover
 
-[![Build Status](https://secure.travis-ci.org/hakanensari/hoover-js.png)](http://travis-ci.org/hakanensari/hoover-js)
+[![Build Status](https://secure.travis-ci.org/hakanensari/hoover.png)](http://travis-ci.org/hakanensari/hoover)
 
 ## Description
 
