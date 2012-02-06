@@ -22,10 +22,10 @@ class Request
 
   # Creates a new request for given credentials.
   constructor: (options) ->
-    @locale  = options.locale  or 'us'
-    @_key    = options.key     or throw 'Missing key'
-    @_secret = options.secret  or throw 'Missing secret'
-    @_tag    = options.tag     or throw 'Missing associate tag'
+    @locale  = options.locale or 'us'
+    @_key    = options.key    or throw 'Missing key'
+    @_secret = options.secret or throw 'Missing secret'
+    @_tag    = options.tag    or throw 'Missing associate tag'
     @reset()
 
   # Adds given parameters to the request.
