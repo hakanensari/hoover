@@ -11,7 +11,7 @@ Hoover is a Node.js wrapper to the [Amazon Product Advertising API] [amazon].
 ## Installation
 
 ```bash
-npm install v
+npm install hoover
 ```
 
 ## Usage
