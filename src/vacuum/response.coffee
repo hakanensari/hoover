@@ -27,7 +27,7 @@ class Response
       key = child.name()
       if key is 'text'
         val = child.text()
-        if Object.keys(obj).length == 0
+        if Object.keys(obj).length is 0
           obj = val
         else
           obj['__content'] = val
