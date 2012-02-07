@@ -16,7 +16,7 @@ publish = (msg, cmd) ->
         'mv docs/* .',
         'rm -rf docs',
         'git add .',
-        "git commit -m '#{msg}",
+        "git commit -m '#{msg}'",
         'git push origin gh-pages',
         'git checkout master',
         'rm -rf docs',
