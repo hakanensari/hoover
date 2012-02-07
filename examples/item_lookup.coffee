@@ -10,5 +10,5 @@ req.add
   operation: 'ItemLookup'
   itemId:    '0816614024'
 
-req.get (res) ->
+req.get (err, res) ->
   console.log util.inspect res.find('Item'), false, null

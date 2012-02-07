@@ -11,7 +11,7 @@ req
     operation:     'ItemLookup'
     itemId:        '0816614024'
     responseGroup: 'Offers'
-  .get (res) ->
+  .get (err, res) ->
     id = res.find('OfferListingId')[0]
     req
       .reset()
@@ -20,5 +20,5 @@ req
         'Item.1.OfferListingId': id
         'Item.1.Quantity':       1
 
-      req.get (res) ->
-        console.log util.inspect res.find('Cart'), false, null
+      req.get (err, res) ->
+        console.log inspect res.find('Cart'), false, null

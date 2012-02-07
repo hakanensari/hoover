@@ -10,5 +10,5 @@ for locale in Object.keys Hoover::HOSTS
   .add
     operation: 'ItemLookup'
     itemId:    '0816614024'
-  .get (res) ->
+  .get (err, res) ->
     console.log util.inspect res.find('Item'), false, null

@@ -50,8 +50,9 @@ class Request
 
     this
 
-  # Performs a request and returns a [Response](./response.html).
-  get: (callback, errback) ->
+  # Performs a request and takes a callback that will receive either a
+  # [Response](./response.html) or an error.
+  get: (callback) ->
     options =
       host: @host()
       path: "/onca/xml?#{@_query()}"
@@ -62,9 +63,11 @@ class Request
         .on 'data', (chunk) ->
           data += chunk
         .on 'end', ->
-          callback new Response data, res.statusCode
+          callback null, new Response data, res.statusCode
         .on 'error', (e) ->
-          errback e if errback
+          callback e
+
+    return
 
   # The Amazon endpoint.
   host: ->

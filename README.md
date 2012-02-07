@@ -34,7 +34,7 @@ req
     operation:   'ItemSearch'
     keywords:    'Deleuze'
     searchIndex: 'All'
-  .get (res) ->
+  .get (err, res) ->
     for item in res.find 'Item'
       console.dir item
 ```

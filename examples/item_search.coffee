@@ -11,5 +11,5 @@ req.add
   keywords:    'Deleuze'
   searchIndex: 'All'
 
-req.get (res) ->
+req.get (err, res) ->
   console.log util.inspect res.find('Item'), false, null

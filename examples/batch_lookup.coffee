@@ -23,5 +23,5 @@ req.add
   'ItemLookup.1.ItemId':             asins[0..9]
   'ItemLookup.2.ItemId':             asins[10..19]
 
-req.get (res) ->
+req.get (err, res) ->
   console.log util.inspect res.toObject(), false, null
