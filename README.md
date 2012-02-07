@@ -45,10 +45,6 @@ req
 * [Amazon API docs] [api]
 * [Annotated source] [source]
 
-## Afterword
-
-![hoover] [hoover]
-
 [status]: https://secure.travis-ci.org/hakanensari/hoover.png
 [travis]: http://travis-ci.org/hakanensari/hoover
 [hoover]: http://f.cl.ly/items/1Q3W372A0H3M0w2H1e0W/hoover.jpeg
