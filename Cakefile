@@ -34,7 +34,7 @@ task 'pages:update', 'Update GitHub Pages', ->
           'git checkout gh-pages'
 
 task 'publish', 'Publish project', ->
-  invoke 'document'
+  invoke 'pages:update'
   invoke 'build'
   run 'npm publish'
 
