@@ -10,7 +10,7 @@ publish = (msg, cmd) ->
     if stdout.match /nothing to commit/
       cmds = [
         'rm -rf docs',
-        'docco src/**/*.coffee',
+        'node_modules/docco/bin/docco src/**/*.coffee',
         cmd,
         'ls -1 | grep -v docs | xargs rm -rf',
         'mv docs/* .',
