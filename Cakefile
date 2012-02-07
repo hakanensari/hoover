@@ -10,10 +10,12 @@ publish = (msg, cmd) ->
     throw err if err
     if stdout.match /nothing to commit/
       invoke 'document'
-      exec cmd
-      exec 'ls -1 | grep -v docs | xargs rm -rf; mv docs/* .; rm -rf docs'
-      exec "git add .; git commit -m '#{msg}'; git push origin gh-pages"
-      exec 'git checkout master'
+      exec [
+        cmd,
+        'ls -1 | grep -v docs | xargs rm -rf; mv docs/* .; rm -rf docs',
+        "git add .; git commit -m '#{msg}'; git push origin gh-pages",
+        'git checkout master'
+      ].join(';')
     else
       console.error 'Index is dirty!'
 
