@@ -9,9 +9,12 @@ class Response
 
   # Queries response for given attribute key and returns object representation
   # of matching nodes.
-  find: (key) ->
+  find: (key, callback) ->
     for node in @_root.find "//xmlns:#{key}", @_ns
-      @_parse node
+      if callback
+        callback @_parse node
+      else
+        @_parse node
 
   # Returns an object representation of the entire response.
   toObject: ->

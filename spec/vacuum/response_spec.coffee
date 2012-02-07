@@ -9,7 +9,7 @@ describe 'Response', ->
 
   describe '#find', ->
     beforeEach ->
-      @items = @res.find('Item')
+      @items = @res.find 'Item'
 
     it 'returns matches to a given query', ->
       expect(@items.length).toBeGreaterThan 0
@@ -28,6 +28,11 @@ describe 'Response', ->
       creator = @items[0]['ItemAttributes']['Creator']
       expect(creator['Role']).toBeDefined()
       expect(creator['__content']).toBeDefined()
+
+    it 'takes an optional callback', ->
+      @res.find 'Item', (item) ->
+        asin = item['ASIN']
+        expect(asin).toMatch /^\w{10}$/
 
   describe '#toObject', ->
     it 'returns entire response as an object', ->

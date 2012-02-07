@@ -37,11 +37,9 @@ req
       console.dir item
 ```
 
-Now, check the examples or [read the API docs] [api].
+For further reading, check the examples or [read the API docs] [api].
 
 ## Afterword
-
-It's called Hoover because:
 
 ![hoover] [hoover]
 
