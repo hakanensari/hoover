@@ -9,11 +9,18 @@ publish = (msg, cmd) ->
   exec 'git status', (err, stdout) ->
     if stdout.match /nothing to commit/
       cmds = [
-        'rm -rf docs; docco src/**/*.coffee',
+        'rm -rf docs',
+        'docco src/**/*.coffee',
         cmd,
-        'ls -1 | grep -v docs | xargs rm -rf; mv docs/* .; rm -rf docs',
-        "git add .; git commit -m '#{msg}'; git push origin gh-pages",
-        'git checkout master'
+        'ls -1 | grep -v docs | xargs rm -rf',
+        'mv docs/* .',
+        'rm -rf docs',
+        'git add .',
+        "git commit -m '#{msg}",
+        'git push origin gh-pages',
+        'git checkout master',
+        'rm -rf docs',
+        'npm install'
       ].join(' && ')
       exec cmds
     else
