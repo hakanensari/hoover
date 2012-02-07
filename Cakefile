@@ -7,15 +7,15 @@ run = (cmd) ->
 
 publish = (msg, cmd) ->
   exec 'git status', (err, stdout) ->
-    throw err if err
     if stdout.match /nothing to commit/
-      invoke 'document'
-      exec [
+      cmds = [
+        'rm -rf docs; docco src/**/*.coffee',
         cmd,
         'ls -1 | grep -v docs | xargs rm -rf; mv docs/* .; rm -rf docs',
         "git add .; git commit -m '#{msg}'; git push origin gh-pages",
         'git checkout master'
-      ].join(';')
+      ].join(' && ')
+      exec cmds
     else
       console.error 'Index is dirty!'
 
@@ -34,9 +34,8 @@ task 'pages:update', 'Update GitHub Pages', ->
           'git checkout gh-pages'
 
 task 'publish', 'Publish project', ->
-  invoke 'pages:update'
-  invoke 'build'
   run 'npm publish'
 
 task 'test', 'Run specs', ->
   run 'jasmine-node --coffee spec/'
+
