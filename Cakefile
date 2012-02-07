@@ -1,17 +1,40 @@
 {exec} = require 'child_process'
 
-task 'build', 'Build project', ->
-  exec 'rm -rf lib/* && coffee --compile --output lib/ src/', (err, stdout, stderr) ->
+run = (cmd) ->
+  exec cmd, (err, stdout, stderr) ->
     throw err if err
     console.log stdout + stderr
+
+publish = (msg, cmd) ->
+  exec 'git status', (err, stdout) ->
+    throw err if err
+    if stdout.match /nothing to commit/
+      invoke 'document'
+      exec cmd
+      exec 'ls -1 | grep -v docs | xargs rm -rf; mv docs/* .; rm -rf docs'
+      exec "git add .; git commit -m '#{msg}'; git push origin gh-pages"
+      exec 'git checkout master'
+    else
+      console.error 'Index is dirty!'
+
+task 'build', 'Build project', ->
+  run 'rm -rf lib/* && coffee --compile --output lib/ src/'
+
+task 'document', 'generate docs', ->
+  run 'docco src/**/*.coffee'
+
+task 'pages:init', 'Initialize GitHub Pages', ->
+  publish 'Create docs',
+          'git symbolic-ref HEAD refs/heads/gh-pages; rm .git/index'
+
+task 'pages:update', 'Update GitHub Pages', ->
+  publish 'Update docs',
+          'git checkout gh-pages'
 
 task 'publish', 'Publish project', ->
+  invoke 'document'
   invoke 'build'
-  exec 'npm publish', (err, stdout, stderr) ->
-    throw err if err
-    console.log stdout + stderr
+  run 'npm publish'
 
-task 'spec', 'Run specs', ->
-  exec 'jasmine-node --coffee spec/', (err, stdout, stderr) ->
-    throw err if err
-    console.log stdout + stderr
+task 'test', 'Run specs', ->
+  run 'jasmine-node --coffee spec/'

@@ -1,14 +1,17 @@
+# External dependency.
 libxmljs = require 'libxmljs'
 
-# The API response.
+# Response wraps around the XML data returned by the [Request](./request.html).
 class Response
   # Creates a new response for given XML data and HTTP status code.
   constructor: (data, @code) ->
     @_root = libxmljs.parseXmlString(data.trim()).root()
     @_ns   = @_root.namespace().href()
 
-  # Queries response for given attribute key and returns object representation
-  # of matching nodes.
+  # Queries response for given node key and returns an object representation of
+  # matching nodes.
+  #
+  # Optionally takes a callback to process returned nodes.
   find: (key, callback) ->
     for node in @_root.find "//xmlns:#{key}", @_ns
       if callback
@@ -16,10 +19,11 @@ class Response
       else
         @_parse node
 
-  # Returns an object representation of the entire response.
+  # Returns an object representation of the response.
   toObject: ->
     @_parse @_root
 
+  # This is an internal method used to cast the XML to a JavaScript object.
   _parse: (node) ->
     obj = {}
 

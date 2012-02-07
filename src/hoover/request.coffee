@@ -1,10 +1,17 @@
+# External dependencies.
 crypto   = require 'crypto'
 http     = require 'http'
+
+# Internal dependency.
 Response = require './response'
 
-# A wrapper around the request to the Amazon Product Advertising API.
+# Request is a wrapper around the request to the Amazon Product Advertising
+# API.
 class Request
   # The latest Amazon API version.
+  #
+  # If you have a whitelisted access key, override this in your
+  # parameters with the earlier `2010-11-01`.
   CURRENT_API_VERSION: '2011-08-01'
 
   # A list of Amazon endpoints.
@@ -21,6 +28,12 @@ class Request
   }
 
   # Creates a new request for given credentials.
+  #
+  # Expects an access key, secret, associate tag, and, optionally, a country
+  # locale. The latter will default to `us` if not given.
+  #
+  # While you may use the same credentials across multiple locales, note that
+  # associate tags will not earn revenue outside their home locale.
   constructor: (options) ->
     @locale  = options.locale or 'us'
     @_key    = options.key    or throw 'Missing key'
@@ -37,7 +50,7 @@ class Request
 
     this
 
-  # Performs request.
+  # Performs a request and returns a [Response](./response.html).
   get: (callback, errback) ->
     options =
       host: @host()
@@ -68,14 +81,14 @@ class Request
 
     this
 
+  # This method is used internally to alphabetically sort parameters and
+  # generate a signed query.
   _query: ->
-    # Sort parameters and generate a query.
     query =
       ("#{k}=#{encodeURIComponent v}" for k, v of @_params)
       .sort()
       .join('&')
 
-    # Sign.
     hmac = crypto.createHmac 'sha256', @_secret
     hmac.update [
       'GET',
