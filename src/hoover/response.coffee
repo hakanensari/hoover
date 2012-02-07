@@ -11,11 +11,11 @@ class Response
   # Queries response for given node key and returns an object representation of
   # matching nodes.
   #
-  # Optionally takes a callback to process returned nodes.
-  find: (key, callback) ->
+  # Optionally takes a function to pass through returned nodes.
+  find: (key, passThrough) ->
     for node in @_root.find "//xmlns:#{key}", @_ns
-      if callback
-        callback @_parse node
+      if passThrough
+        passThrough @_parse node
       else
         @_parse node
 
