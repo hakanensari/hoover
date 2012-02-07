@@ -1,7 +1,7 @@
 {
    "name": "hoover",
    "description": "An Amazon Product Advertising API wrapper for Node.js",
-   "version": "0.0.2",
+   "version": "0.0.3",
    "homepage": "http://github.com/hakanensari/hoover",
    "author": "Hakan Ensari <hakan.ensari@papercavalier.com>",
    "main": "./lib/hoover",
