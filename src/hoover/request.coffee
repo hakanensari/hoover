@@ -38,7 +38,7 @@ class Request
     this
 
   # Performs request.
-  get: (callback, errback = ->) ->
+  get: (callback, errback) ->
     options =
       host: @host()
       path: "/onca/xml?#{@_query()}"
@@ -51,7 +51,7 @@ class Request
         .on 'end', ->
           callback new Response data, res.statusCode
         .on 'error', (e) ->
-          errback e
+          errback e if errback
 
   # The Amazon endpoint.
   host: ->
