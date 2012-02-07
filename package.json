@@ -21,10 +21,10 @@
    "devDependencies": {
      "coffee-script": "*",
      "docco": "*",
-     "jasmine-node": "*"
+     "vows": "*"
    },
    "scripts": {
-     "test": "jasmine-node --coffee spec/"
+     "test": "node_modules/vows/bin/vows"
    },
    "engines": {
      "node": ">= 0.4.0"
