@@ -9,9 +9,6 @@ Response = require './response'
 # API.
 class Request
   # The latest Amazon API version.
-  #
-  # If you have a whitelisted access key, override this in your
-  # parameters with the earlier `2010-11-01`.
   CURRENT_API_VERSION: '2011-08-01'
 
   # A list of Amazon endpoints.
