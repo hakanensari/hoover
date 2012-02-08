@@ -1,4 +1,3 @@
-util   = require 'util'
 Hoover = require '../src/hoover'
 
 req = new Hoover
@@ -12,4 +11,5 @@ req.add
   searchIndex: 'All'
 
 req.get (err, res) ->
-  console.log util.inspect res.find('Item'), false, null
+  res.find 'Item', (item) ->
+    console.log item['ItemAttributes']['Title']
