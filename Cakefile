@@ -44,5 +44,5 @@ task 'publish', 'Publish project', ->
   run 'npm publish'
 
 task 'test', 'Run specs', ->
-  run 'jasmine-node --coffee spec/'
+  run 'vows'
 
