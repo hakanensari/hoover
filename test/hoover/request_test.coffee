@@ -1,92 +1,55 @@
-vows   = require 'vows'
-assert = require 'assert'
-
+should   = require 'should'
 Request  = require '../../src/hoover/request'
 Response = require '../../src/hoover/response'
 
-vows
-  .describe('A request')
-  .addBatch
-    'with no key':
-      topic: ->
-        new Request
-          secret: 'foo'
-          tag:    'bar'
+describe 'Request', ->
+  describe 'when created', ->
+    it 'requires a key', ->
+      (
+        ->
+          new Request
+            secret: 'foo'
+            tag:    'bar'
+      ).should.throw
 
-      'throws an error': (req) ->
-        assert.throws req
+    it 'requires a secret', ->
+      (
+        ->
+          new Request
+            key: 'foo'
+            tag: 'bar'
+      ).should.throw
 
-    'with no secret':
-      topic: ->
-        new Request
-          key: 'foo'
-          tag: 'bar'
+    it 'requires a tag', ->
+      (
+        ->
+          new Request
+            key:    'foo'
+            secret: 'bar'
+      ).should.throw
 
-      'throws an error': (req) ->
-        assert.throws req
+    it 'defaults to the US locale', ->
+      new Request
+        key:    'foo'
+        secret: 'bar'
+        tag:    'baz'
+      .locale.should.eql 'us'
 
-    'with no tag':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
+    it 'populates default parameters', ->
+      req = new Request
+        key:    'foo'
+        secret: 'bar'
+        tag:    'baz'
+      for key in ['AWSAccessKeyId',
+                  'AssociateTag',
+                  'Service',
+                  'Timestamp',
+                  'Version']
+        should.exist req._params[key], "expected #{key} to exist"
 
-      'throws an error': (req) ->
-        assert.throws req
-
-    'with no locale':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'baz'
-
-      'defaults to the US': (req) ->
-        assert.equal req.locale, 'us'
-
-    'with a bad locale':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'baz'
-          locale: 'bad'
-
-      'and returning the host':
-        topic: (req) ->
-          req.host()
-
-        'throws an error': (host) ->
-          assert.throws host
-
-    'with a good locale':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'baz'
-          locale: 'uk'
-
-      'uses that locale': (req) ->
-        assert.equal req.locale, 'uk'
-
-    'with proper credentials':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'baz'
-
-      'populates the default parameters': (req) ->
-        for key in ['AWSAccessKeyId',
-                    'AssociateTag',
-                    'Service',
-                    'Timestamp',
-                    'Version']
-          assert.isString req._params[key]
-
-    'when given new parameters':
-      topic: ->
+  describe '#add', ->
+    beforeEach ->
+      @req =
         new Request
           key:    'foo'
           secret: 'bar'
@@ -95,58 +58,67 @@ vows
           foo: 1
           Bar: [1, 2]
 
-      'capitalizes keys': (req) ->
-        assert.equal req._params['Foo'], 1
+    it 'capitalizes keys', ->
+      should.exist @req._params['Foo']
 
-      'casts array values to strings': (req) ->
-        assert.equal req._params['Bar'], '1,2'
+    it 'casts array values to string', ->
+      @req._params['Bar'].should.equal '1,2'
 
-    'when run':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'baz'
-        .get @callback
+  describe '#get', ->
+    it 'returns a response', (done) ->
+      new Request
+        key:    'foo'
+        secret: 'bar'
+        tag:    'baz'
+      .get (err, res) ->
+        throw err if err
+        res.should.be.an.instanceof Response
+        done()
 
-      'returns a response': (err, res) =>
-        assert.equal err, undefined
-        assert.instanceOf res, Response
+  describe '#host', ->
+    it 'requires a valid locale', ->
+      (
+        ->
+          new Request
+            key:    'foo'
+            secret: 'bar'
+            tag:    'baz'
+            locale: 'bad'
+          .host()
+      ).should.throw
 
-    'when reset':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'baz'
-          locale: 'uk'
-          foo: 1
-        .reset()
 
-      'deletes non-default keys': (req) ->
-        assert.isUndefined req._params['Foo']
+  describe '#path', ->
+    beforeEach ->
+      @path = new Request
+        key:    'foo'
+        secret: 'bar'
+        tag:    'baz'
+        locale: 'uk'
+      .add(a: 'foo,bar')
+      .path()
 
-    'when building the query':
-      topic: ->
-        new Request
-          key:    'foo'
-          secret: 'bar'
-          tag:    'baz'
-          locale: 'uk'
-          foo: 1
-        .add(a: 'foo,bar')
-        ._query()
+    it 'sorts the parameters', ->
+      @path.should.match /\?A=/
 
-      'sorts the parameters': (query) ->
-        assert.match query, /^A=/
+    it 'canonicalizes the parameters', ->
+      @path.should.match /\w+=\w+&/
 
-      'canonicalizes the parameters': (query) ->
-        assert.match query, /\w+=\w+&/
+    it 'URL-encodes', ->
+      @path.should.match /foo%2Cbar/
 
-      'URL-encodes': (query) ->
-        assert.match query, /foo%2Cbar/
+    it 'signs', ->
+      @path.should.match /&Signature=.*/
 
-      'signs': (query) ->
-        assert.match query, /&Signature=.*/
+  describe '#reset', ->
+    it 'deletes added keys', ->
+      req = new Request
+        key:    'foo'
+        secret: 'bar'
+        tag:    'baz'
+        locale: 'uk'
+      .add
+        foo: 1
+      .reset()
 
-  .export(module)
+      should.not.exist req._params['Foo']

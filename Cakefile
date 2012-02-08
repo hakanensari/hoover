@@ -47,5 +47,4 @@ task 'release', 'Release project to npm', ->
   run 'npm publish'
 
 task 'test', 'Run specs', ->
-  run 'vows'
-
+  run 'npm test'

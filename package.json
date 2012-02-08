@@ -21,10 +21,11 @@
    "devDependencies": {
      "coffee-script": "*",
      "docco": "*",
-     "vows": "*"
+     "mocha": "*",
+     "should": "*"
    },
    "scripts": {
-     "test": "node_modules/vows/bin/vows"
+     "test": "node_modules/mocha/bin/mocha test/**/*.coffee"
    },
    "engines": {
      "node": ">= 0.4.0"

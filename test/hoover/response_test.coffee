@@ -1,55 +1,38 @@
-vows     = require 'vows'
-assert   = require 'assert'
 fs       = require 'fs'
+should   = require 'should'
 Response = require '../../src/hoover/response'
 
-vows
-  .describe('A response')
-  .addBatch
-    'when created':
-      topic: ->
-        data = fs.readFileSync("#{__dirname}/../fixtures/response", 'UTF-8')
-        new Response data, 200
+describe 'Response', ->
+  beforeEach ->
+    data = fs.readFileSync("#{__dirname}/../fixtures/response", 'UTF-8')
+    @res = new Response data, 200
 
-      'and cast to an object':
-        topic: (res) ->
-          res.toObject()
+  describe '#to_object', ->
+    it 'returns an object representation of the response', ->
+      @res.toObject().should.be.an.instanceof Object
 
-        'returns an object representation of itself': (obj) ->
-          assert.isObject obj
+    describe '#find', ->
+      it 'returns matches', ->
+        @res.find('Item')
+        @res.find('Item').should.not.be.empty
 
-      'and queried for an existing node':
-        topic: (res) ->
-          res.find 'Item'
+      it 'returns nested nodes with no siblings', ->
+        @res.find('Item')[0]['ASIN'].should.be.a 'string'
 
-        'returns matches': (items) ->
-          assert.isTrue items.length > 0
+      it 'parses nodes with siblings', ->
+        @res.find('Item')[0]['ItemLinks']['ItemLink'].should.not.be.empty
 
-        'returns nested nodes with no siblings': (items) ->
-          assert.isString items[0]['ASIN']
+      it 'parses nodes with attributes', ->
+        creator = @res.find('Item')[0]['ItemAttributes']['Creator']
+        creator['Role'].should.be.a 'string'
+        creator['__content'].should.be.a 'string'
 
-        'parses nodes with siblings': (items) ->
-          assert.isNotZero items[0]['ItemLinks']['ItemLink'].length
+      describe 'when no matches are found', ->
+        it 'returns an empty array', ->
+          @res.find('foo').should.eql []
 
-        'parses nodes with attributes': (items) ->
-          creator = items[0]['ItemAttributes']['Creator']
-          assert.isString creator['Role']
-          assert.isString creator['__content']
-
-      'and queried for a non-existing node':
-        topic: (res) ->
-          res.find 'foo'
-
-        'returns an empty array': (result) ->
-          assert.isEmpty result
-          assert.isArray result
-
-      'and queried with a function':
-        topic: (res) ->
-          res.find 'Item', (item) -> item['ASIN']
-
-        'passes matches through that function': (asins) ->
+      describe 'when given a function', ->
+        it 'passes matches through it', ->
+          asins = @res.find 'Item', (item) -> item['ASIN']
           for asin in asins
-            assert.match asin, /^\w{10}$/
-
-  .export(module)
+            asin.should.match /^\w{10}$/
