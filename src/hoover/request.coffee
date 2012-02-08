@@ -52,7 +52,7 @@ class Request
   get: (callback) ->
     options =
       host: @host()
-      path: "/onca/xml?#{@_query()}"
+      path: @path()
 
     http.get options, (res) ->
       data = ''
@@ -66,24 +66,12 @@ class Request
 
     return
 
-  # The Amazon endpoint.
+  # The API host.
   host: ->
     @HOSTS[@locale] or throw 'Bad locale'
 
-  # Resets the parameters of the request.
-  reset: ->
-    @_params =
-      AWSAccessKeyId: @_key
-      AssociateTag:   @_tag
-      Service:        'AWSECommerceService'
-      Timestamp:      new Date().toISOString()
-      Version:        @CURRENT_API_VERSION
-
-    this
-
-  # This method is used internally to alphabetically sort parameters and
-  # generate a signed query.
-  _query: ->
+  # The path to request.
+  path: ->
     query =
       ("#{k}=#{encodeURIComponent v}" for k, v of @_params)
       .sort()
@@ -98,6 +86,17 @@ class Request
     ].join("\n")
     signature = hmac.digest 'base64'
 
-    "#{query}&Signature=#{encodeURIComponent(signature)}"
+    "/onca/xml?#{query}&Signature=#{encodeURIComponent(signature)}"
+
+  # Resets the parameters of the request.
+  reset: ->
+    @_params =
+      AWSAccessKeyId: @_key
+      AssociateTag:   @_tag
+      Service:        'AWSECommerceService'
+      Timestamp:      new Date().toISOString()
+      Version:        @CURRENT_API_VERSION
+
+    this
 
 module.exports = Request
