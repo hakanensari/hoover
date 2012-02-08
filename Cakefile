@@ -14,7 +14,7 @@ task 'document', 'generate docs', ->
 
 task 'publish', 'Publish docs to GitHub', ->
   exec 'git rm --ignore-unmatch doc && git status', (err, stdout) ->
-    if !stdout.match /nothing to commit/
+    if stdout.match /nothing to commit/
       publish = (msg, cmd) ->
         cmds = [
           'rm -rf docs',
