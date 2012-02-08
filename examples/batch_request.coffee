@@ -15,11 +15,10 @@ req = new Hoover
 
 req.add
   operation:                         'ItemLookup'
-  version:                           '2010-11-01'
   'ItemLookup.Shared.IdType':        'ASIN'
   'ItemLookup.Shared.Condition':     'All'
   'ItemLookup.Shared.MerchantId':    'All'
-  'ItemLookup.Shared.ResponseGroup': ['OfferFull', 'ItemAttributes']
+  'ItemLookup.Shared.ResponseGroup': ['Offers', 'ItemAttributes']
   'ItemLookup.1.ItemId':             asins[0..9]
   'ItemLookup.2.ItemId':             asins[10..19]
 
