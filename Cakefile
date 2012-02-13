@@ -44,7 +44,9 @@ task 'publish', 'Publish docs to GitHub', ->
       console.error 'Index is dirty!'
 
 task 'release', 'Release project to npm', ->
-  run 'npm publish'
+  invoke 'build'
+  process.nextTick ->
+    run 'npm publish'
 
 task 'test', 'Run specs', ->
   run 'npm test'
