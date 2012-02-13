@@ -16,7 +16,7 @@
      "url": "git://github.com/hakanensari/hoover.git"
    },
    "dependencies": {
-     "libxmljs": "*"
+     "crack": "*"
    },
    "devDependencies": {
      "coffee-script": "*",

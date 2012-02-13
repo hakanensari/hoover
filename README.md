@@ -35,6 +35,7 @@ req
     keywords:    'Deleuze'
     searchIndex: 'All'
   .get (err, res) ->
+    # res.toJS()
     res.find 'Item', (item) ->
       console.dir item
 ```
