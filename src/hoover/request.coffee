@@ -1,4 +1,5 @@
 # External dependencies.
+Bezos    = require 'bezos'
 crypto   = require 'crypto'
 http     = require 'http'
 
@@ -72,21 +73,7 @@ class Request
 
   # The path to request.
   path: ->
-    query =
-      ("#{k}=#{encodeURIComponent v}" for k, v of @_params)
-      .sort()
-      .join('&')
-
-    hmac = crypto.createHmac 'sha256', @_secret
-    hmac.update [
-      'GET',
-      @host(),
-      '/onca/xml',
-      query
-    ].join("\n")
-    signature = hmac.digest 'base64'
-
-    "/onca/xml?#{query}&Signature=#{encodeURIComponent(signature)}"
+    new Bezos(@_secret).sign @host(), '/onca/xml', @_params
 
   # Resets the parameters of the request.
   reset: ->
@@ -98,5 +85,8 @@ class Request
       Version:        @CURRENT_API_VERSION
 
     this
+
+  url: ->
+    "http://#{@host()}#{@path()}"
 
 module.exports = Request

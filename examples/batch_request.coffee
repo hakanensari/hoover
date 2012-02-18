@@ -23,4 +23,4 @@ req.add
   'ItemLookup.2.ItemId':             asins[10..19]
 
 req.get (err, res) ->
-  console.log util.inspect res.toObject(), false, null
+  console.log util.inspect res.toJS(), false, null
