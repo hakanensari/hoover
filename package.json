@@ -1,21 +1,22 @@
 {
    "name": "hoover",
    "description": "An Amazon Product Advertising API wrapper for Node.js",
-   "version": "0.0.5",
-   "homepage": "http://github.com/hakanensari/hoover",
+   "version": "0.0.6",
+   "homepage": "https://github.com/hakanensari/hoover",
    "author": "Hakan Ensari <hakan.ensari@papercavalier.com>",
    "main": "./lib/hoover",
    "directories": {
      "lib": "./lib/hoover"
    },
    "bugs": {
-     "url": "http://github.com/hakanensari/hoover/issues"
+     "url": "https://github.com/hakanensari/hoover/issues"
    },
    "repository": {
      "type": "git",
      "url": "git://github.com/hakanensari/hoover.git"
    },
    "dependencies": {
+     "bezos": "*",
      "crack": "*"
    },
    "devDependencies": {
