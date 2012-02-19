@@ -81,7 +81,6 @@ class Request
       AWSAccessKeyId: @_key
       AssociateTag:   @_tag
       Service:        'AWSECommerceService'
-      Timestamp:      new Date().toISOString()
       Version:        @CURRENT_API_VERSION
 
     this

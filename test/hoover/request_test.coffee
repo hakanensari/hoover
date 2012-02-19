@@ -43,7 +43,6 @@ describe 'Request', ->
       for key in ['AWSAccessKeyId',
                   'AssociateTag',
                   'Service',
-                  'Timestamp',
                   'Version']
         should.exist req._params[key], "expected #{key} to exist"
 
