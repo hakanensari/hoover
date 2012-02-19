@@ -1,6 +1,5 @@
 # External dependencies.
 Bezos    = require 'bezos'
-crypto   = require 'crypto'
 http     = require 'http'
 
 # Internal dependency.
@@ -67,11 +66,11 @@ class Request
 
     return
 
-  # The API host.
+  # The request host.
   host: ->
     @HOSTS[@locale] or throw 'Bad locale'
 
-  # The path to request.
+  # The request path.
   path: ->
     new Bezos(@_secret).sign @host(), '/onca/xml', @_params
 
@@ -84,8 +83,5 @@ class Request
       Version:        @CURRENT_API_VERSION
 
     this
-
-  url: ->
-    "http://#{@host()}#{@path()}"
 
 module.exports = Request
