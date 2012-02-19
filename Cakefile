@@ -49,4 +49,4 @@ task 'release', 'Release project to npm', ->
     run 'npm publish'
 
 task 'test', 'Run specs', ->
-  run 'npm test'
+  run 'node_modules/mocha/bin/mocha -R spec test/**/*.coffee'
