@@ -1,6 +1,6 @@
 # External dependencies.
-Bezos    = require 'bezos'
-http     = require 'http'
+Bezos = require 'bezos'
+http  = require 'http'
 
 # Internal dependency.
 Response = require './response'
@@ -32,10 +32,10 @@ class Request
   # While you may use the same credentials across multiple locales, note that
   # associate tags will not earn revenue outside their home locale.
   constructor: (options) ->
-    @locale  = options.locale or 'us'
-    @_key    = options.key    or throw 'Missing key'
-    @_secret = options.secret or throw 'Missing secret'
-    @_tag    = options.tag    or throw 'Missing associate tag'
+    @locale = options.locale           or 'us'
+    @_bezos = new Bezos options.secret or throw 'Missing secret'
+    @_key   = options.key              or throw 'Missing key'
+    @_tag   = options.tag              or throw 'Missing associate tag'
     @reset()
 
   # Adds given parameters to the request.
@@ -72,7 +72,10 @@ class Request
 
   # The request path.
   path: ->
-    new Bezos(@_secret).sign @host(), '/onca/xml', @_params
+    @_bezos.sign 'GET'
+               , @host()
+               , '/onca/xml'
+               , @_params
 
   # Resets the parameters of the request.
   reset: ->
