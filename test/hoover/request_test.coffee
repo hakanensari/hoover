@@ -46,14 +46,14 @@ describe 'Request', ->
                   'Version']
         should.exist req._params[key], "expected #{key} to exist"
 
-  describe '#add', ->
+  describe '#build', ->
     beforeEach ->
       @req =
         new Request
           key:    'foo'
           secret: 'bar'
           tag:    'baz'
-        .add
+        .build
           foo: 1
           Bar: [1, 2]
 
@@ -94,7 +94,8 @@ describe 'Request', ->
         secret: 'bar'
         tag:    'baz'
         locale: 'uk'
-      .add(a: 'foo,bar')
+      .build
+        a: 'foo,bar'
       .path()
 
     it 'sorts the parameters', ->
@@ -116,7 +117,7 @@ describe 'Request', ->
         secret: 'bar'
         tag:    'baz'
         locale: 'uk'
-      .add
+      .build
         foo: 1
       .reset()
 

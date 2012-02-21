@@ -7,7 +7,7 @@ req = new Hoover
   tag:    process.env.AMAZON_TAG
 
 req
-  .add
+  .build
     operation:     'ItemLookup'
     itemId:        '0816614024'
     responseGroup: 'Offers'
@@ -15,8 +15,8 @@ req
     id = res.find('OfferListingId')[0]
     req
       .reset()
-      .add
-        operation:               'CartCreate'
+      .build
+        'operation':             'CartCreate'
         'Item.1.OfferListingId': id
         'Item.1.Quantity':       1
 

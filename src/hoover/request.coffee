@@ -39,7 +39,7 @@ class Request
     @reset()
 
   # Adds given parameters to the request.
-  add: (params) ->
+  build: (params) ->
     for key, val of params
       val = val.join(',') if val.constructor is Array
       key = key[0].toUpperCase() + key.slice(1)
@@ -77,7 +77,7 @@ class Request
                , '/onca/xml'
                , @_params
 
-  # Resets the parameters of the request.
+  # Resets request parameters.
   reset: ->
     @_params =
       AWSAccessKeyId: @_key

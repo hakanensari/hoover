@@ -5,7 +5,7 @@ req = new Hoover
   secret: process.env.AMAZON_SECRET
   tag:    process.env.AMAZON_TAG
 
-req.add
+req.build
   operation:   'ItemSearch'
   keywords:    'Deleuze'
   searchIndex: 'All'

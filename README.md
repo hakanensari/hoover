@@ -28,7 +28,7 @@ req = new Hoover
   locale: 'uk'
 
 req
-  .add
+  .build
     operation:   'ItemSearch'
     keywords:    'Deleuze'
     searchIndex: 'All'

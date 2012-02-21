@@ -13,8 +13,8 @@ req = new Hoover
   secret: process.env.AMAZON_SECRET
   tag:    process.env.AMAZON_TAG
 
-req.add
-  operation:                         'ItemLookup'
+req.build
+  'operation':                       'ItemLookup'
   'ItemLookup.Shared.IdType':        'ASIN'
   'ItemLookup.Shared.Condition':     'All'
   'ItemLookup.Shared.MerchantId':    'All'

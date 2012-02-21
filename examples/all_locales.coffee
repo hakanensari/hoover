@@ -7,7 +7,7 @@ for locale in Object.keys Hoover::HOSTS
     key:    process.env.AMAZON_KEY
     secret: process.env.AMAZON_SECRET
     tag:    process.env.AMAZON_TAG
-  .add
+  .build
     operation: 'ItemLookup'
     itemId:    '0816614024'
   .get (err, res) ->

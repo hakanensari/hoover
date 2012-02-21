@@ -6,7 +6,7 @@ req = new Hoover
   secret: process.env.AMAZON_SECRET
   tag:    process.env.AMAZON_TAG
 
-req.add
+req.build
   operation: 'ItemLookup'
   itemId:    '0816614024'
 
