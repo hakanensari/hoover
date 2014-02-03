@@ -55,12 +55,12 @@ class Request
       path: @path()
 
     http.get options, (res) ->
-      data = ''
+      data = []
       res
         .on 'data', (chunk) ->
-          data += chunk
+          data.push chunk
         .on 'end', ->
-          callback null, new Response data, res.statusCode
+          callback null, new Response Buffer.concat(data).toString(), res.statusCode
         .on 'error', (e) ->
           callback e
 
