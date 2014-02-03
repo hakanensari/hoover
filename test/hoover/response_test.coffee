@@ -17,15 +17,15 @@ describe 'Response', ->
       @res.find('Item').should.not.be.empty
 
     it 'returns nested nodes with no siblings', ->
-      @res.find('Item')[0]['ASIN'].should.be.a 'string'
+      @res.find('Item')[0]['ASIN'].should.be.a.String
 
     it 'parses nodes with siblings', ->
       @res.find('Item')[0]['ItemLinks']['ItemLink'].should.not.be.empty
 
     it 'parses nodes with attributes', ->
       creator = @res.find('Item')[0]['ItemAttributes']['Creator']
-      creator['Role'].should.be.a 'string'
-      creator['__content'].should.be.a 'string'
+      creator['Role'].should.be.a.String
+      creator['__content'].should.be.a.String
 
     describe 'when no matches are found', ->
       it 'returns an empty array', ->

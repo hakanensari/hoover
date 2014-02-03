@@ -69,6 +69,8 @@ describe 'Request', ->
         key:    'foo'
         secret: 'bar'
         tag:    'baz'
+      .build
+        operation: 'Foo'
       .get (err, res) ->
         throw err if err
         res.should.be.an.instanceof Response
