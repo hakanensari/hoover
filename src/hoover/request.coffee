@@ -1,6 +1,6 @@
 # External dependencies.
 Bezos = require 'bezos'
-http  = require 'http'
+https = require 'https'
 
 # Internal dependency.
 Response = require './response'
@@ -54,7 +54,7 @@ class Request
       host: @host()
       path: @path()
 
-    http.get options, (res) ->
+    https.get options, (res) ->
       data = []
       res
         .on 'data', (chunk) ->
